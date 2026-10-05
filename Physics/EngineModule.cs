@@ -38,6 +38,7 @@ namespace SFS.Parts.Modules
         [HideIf(nameof(multipleNozzles)), Required] public GameObject heatHolder;
         [HideIf(nameof(multipleNozzles)), Required] public GameObject heatHitbox;
         [HideIf(nameof(multipleNozzles))] Vector3 originalPosition;
+        [HideIf(nameof(multipleNozzles))] Vector3 originalHitboxScale;
         //
         [ShowIf(nameof(multipleNozzles))] public HeatHitbox[] heatHitboxes;
 
@@ -46,6 +47,7 @@ namespace SFS.Parts.Modules
         public override float ThrustAmount => thrust.Value;
         public override Vector2 ThrustNormal => thrustNormal.Value;
         public override Vector2 ThrustPosition => thrustPosition.Value;
+        public override float Isp => ISP.Value * (float)Base.worldBase.settings.difficulty.IspMultiplier;
         public override bool HeatOn => heatOn.Value;
         public override GameObject HeatHolder => heatHolder;
         public override GameObject HeatHitbox => heatHitbox;
@@ -167,6 +169,13 @@ namespace SFS.Parts.Modules
                 WorldView.main.onVelocityOffset += PositionFlameHitbox;
             }
             
+            // Cache the authored hitbox scale so throttle only scales it, instead of overwriting it
+            if (multipleNozzles)
+                foreach (HeatHitbox hitbox in heatHitboxes)
+                    hitbox.originalScale = hitbox.heatHitbox.transform.localScale;
+            else
+                originalHitboxScale = heatHitbox.transform.localScale;
+            
             throttle_Out.OnChange += () =>
             {
                 if (multipleNozzles)
@@ -174,13 +183,13 @@ namespace SFS.Parts.Modules
                     foreach (HeatHitbox hitbox in heatHitboxes)
                     {
                         hitbox.heatHolder.SetActive(throttle_Out.Value > 0);
-                        hitbox.heatHitbox.transform.localScale = new Vector3(1, throttle_Out.Value, 1);   
+                        hitbox.heatHitbox.transform.localScale = new Vector3(hitbox.originalScale.x, hitbox.originalScale.y * throttle_Out.Value, 1);   
                     }
                 }
                 else
                 {
                     heatHolder.SetActive(throttle_Out.Value > 0);
-                    heatHitbox.transform.localScale = new Vector3(1, throttle_Out.Value, 1);   
+                    heatHitbox.transform.localScale = new Vector3(originalHitboxScale.x, originalHitboxScale.y * throttle_Out.Value, 1);   
                 }
             };
         }
@@ -196,7 +205,7 @@ namespace SFS.Parts.Modules
         void RecalculateMassFlow()
         {
             float multiplier = transform.TransformVector(thrustNormal.Value).magnitude;
-            source.SetMassFlow(thrust.Value * multiplier * throttle_Out.Value / (ISP.Value * (float)Base.worldBase.settings.difficulty.IspMultiplier));
+            source.SetMassFlow(thrust.Value * multiplier * throttle_Out.Value / Isp);
         }
         void CheckOutOfFuel()
         {
@@ -301,5 +310,6 @@ namespace SFS.Parts.Modules
         [Required] public GameObject heatHolder;
         [Required] public GameObject heatHitbox;
         [NonSerialized] public Vector3 originalPosition;
+        [NonSerialized] public Vector3 originalScale;
     }
 }

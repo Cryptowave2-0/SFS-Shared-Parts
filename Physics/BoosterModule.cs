@@ -33,6 +33,7 @@ namespace SFS.Parts.Modules
         [Required] public GameObject heatHolder;
         [Required] public GameObject heatHitbox;
         Vector3 originalPosition;
+        Vector3 originalHitboxScale;
 
 
         // Injected
@@ -46,6 +47,7 @@ namespace SFS.Parts.Modules
         public override float ThrustAmount => thrustVector.Value.magnitude;
         public override Vector2 ThrustNormal => thrustVector.Value.normalized;
         public override Vector2 ThrustPosition => thrustPosition.Value;
+        public override float Isp => ISP.Value * (float)Base.worldBase.settings.difficulty.IspMultiplier;
         public override bool HeatOn => true; // Boosters lack a "heat on" variable, so heat is always considered on
         public override GameObject HeatHolder => heatHolder;
         public override GameObject HeatHitbox => heatHitbox;
@@ -54,11 +56,15 @@ namespace SFS.Parts.Modules
 
 
         // Get
+        double IspMultiplier => Application.isPlaying && Base.worldBase.insideWorld.Value? Base.worldBase.settings.difficulty.IspMultiplier : 1;
+        double DryMassMultiplier => Application.isPlaying && Base.worldBase.insideWorld.Value? Base.worldBase.settings.difficulty.DryMassMultiplier : 1;
+        float ScaledISP => ISP.Value * (float)IspMultiplier;
+        //
         double BurnTimeLeft => TotalBurnTime * fuelPercent.Value;
         double FuelMass => TotalFuelCapacity * fuelPercent.Value;
-        double TotalBurnTime => TotalFuelCapacity / (thrustVector.Value.magnitude / (ISP.Value * (float)Base.worldBase.settings.difficulty.IspMultiplier));
+        double TotalBurnTime => TotalFuelCapacity / (thrustVector.Value.magnitude / ScaledISP);
         double TotalFuelCapacity => (1 - DryMassPercent) * wetMass.Value;
-        double DryMassPercent => dryMassPercent.Value * (float)Base.worldBase.settings.difficulty.DryMassMultiplier;
+        double DryMassPercent => dryMassPercent.Value * DryMassMultiplier;
 
 
         // Description
@@ -71,7 +77,7 @@ namespace SFS.Parts.Modules
 
             // Thrust, burn time, isp
             drawer.DrawStat(53, thrustVector.Value.magnitude.ToThrustString());
-            drawer.DrawStat(52, ISP.Value.ToEfficiencyString());
+            drawer.DrawStat(52, ScaledISP.ToEfficiencyString());
             drawer.DrawSpace(51);
             drawer.DrawStat(50, () => BurnTimeLeft.ToBurnTimeString(false), () => BurnTimeLeft.ToBurnTimeString(true), Register, Unregister);
 
@@ -119,11 +125,14 @@ namespace SFS.Parts.Modules
 
             if (heatHitbox == null)
                 heatHitbox = heatHolder;
+            
+            // Cache the authored hitbox scale so throttle only scales it, instead of overwriting it
+            originalHitboxScale = heatHitbox.transform.localScale;
 
             throttle_Out.OnChange += () =>
             {
                 heatHolder.SetActive(throttle_Out.Value > 0);
-                heatHitbox.transform.localScale = new Vector3(1, throttle_Out.Value, 1);
+                heatHitbox.transform.localScale = new Vector3(originalHitboxScale.x, originalHitboxScale.y * throttle_Out.Value, 1);
             };
         }
 

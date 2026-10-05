@@ -247,8 +247,11 @@ namespace SFS
         public F Parts_Expansion => A(nameof(Parts_Expansion), "Parts Expansion");
         public F Expand_View_Button => A(nameof(Expand_View_Button), "Expand View");
         public F Redstone_Atlas_Pack => A(nameof(Redstone_Atlas_Pack), "Redstone Atlas Pack");
+        [Unexported]
         public F Saturn5_Pack => A(nameof(Saturn5_Pack), "Saturn V Pack");
+        [Unexported]
         public F SLS_Pack => A(nameof(SLS_Pack), "SLS Pack");
+        [Unexported]
         public F Starship_Pack => A(nameof(Starship_Pack), "Starship Pack");
         public F Rockets_Bundle => A(nameof(Rockets_Bundle), "Rockets Bundle");
         public F Skins_Expansion => A(nameof(Skins_Expansion), "Skins Expansion");
@@ -334,7 +337,7 @@ namespace SFS
         public F OrderNotFound => A(nameof(OrderNotFound), "The purchase was not found, make sure the ID is correct.");
         public F OrderNotProcessed => A(nameof(OrderNotProcessed), "This purchase has not been processed properly.\nIt could have been refunded.");
         public F PurchaseNotConsumed => A(nameof(PurchaseNotConsumed), "This purchase should be functioning normally and can't be claimed.\nTry using the regular restore option.");
-        public F RestoredSuccessfully => A(nameof(PurchaseNotConsumed), "Restored purchases successfully:\n%products%");
+        public F RestoredSuccessfully => A(nameof(RestoredSuccessfully), "Restored purchases successfully:\n%products%");
         #endregion
 
         #region Sharing
@@ -412,6 +415,7 @@ namespace SFS
         public F Menu_Opacity => A(nameof(Menu_Opacity), "Interface Opacity");
         public F Shakes_Name => A(nameof(Shakes_Name), "Camera Shake");
         public F Orbit_Line_Count => A(nameof(Orbit_Line_Count), "Orbit Line Count");
+        public F Engine_Smoke => A(nameof(Engine_Smoke), "Engine Smoke");
         public F Anti_Aliasing => A(nameof(Anti_Aliasing), "Anti-Aliasing");
         public F Set_Save_Location => A(nameof(Set_Save_Location), "Set save location");
         public F Change_Save_Location => A(nameof(Change_Save_Location), "Change save location");
@@ -493,6 +497,10 @@ namespace SFS
         [LocSpace]
         public F Launch_Button => A(nameof(Launch_Button), "Launch");
         public F Move_Rocket_Button => A(nameof(Move_Rocket_Button), "Move Rocket");
+        //
+        [LocSpace]
+        public F Gizmos_Snap_Smooth => A(nameof(Gizmos_Snap_Smooth), "Smooth");
+        public F Gizmos_Snap_Angle => A(nameof(Gizmos_Snap_Angle), "%value%°");
         //
         [Documentation("Clear build area")]
         public F Clear_Warning => A(nameof(Clear_Warning), "Clear build area?");
@@ -719,7 +727,7 @@ namespace SFS
         // Engines
         public F Kolibri_RF9_Engine_Name => A(nameof(Kolibri_RF9_Engine_Name), "Kolibri RF9 Engine");
         public F Cerberus_R18_Engine_Name => A(nameof(Cerberus_R18_Engine_Name), "Cerberus R18 Engine");
-        public F Osprey_RTD_Engine_Name => A(nameof(Osprey_RTD_Engine_Name), "Osprey RTD Engine");
+        public F Osprey_RD2_Engine_Name => A(nameof(Osprey_RD2_Engine_Name), "Osprey RD2 Engine");
         public F Albatross_B4_Engine_Name => A(nameof(Albatross_B4_Engine_Name), "Albatross B4 Engine");
         public F Buzzard_P25_Engine_Name => A(nameof(Buzzard_P25_Engine_Name), "Buzzard P25 Engine");
         public F Harrier_L8_Engine_Name => A(nameof(Harrier_L8_Engine_Name), "Harrier L8 Engine");
@@ -727,6 +735,7 @@ namespace SFS
         public F Sparrow_SX_Engine_Name => A(nameof(Sparrow_SX_Engine_Name), "Sparrow SX Engine");
         public F Sparrow_SP_Engine_Name => A(nameof(Sparrow_SP_Engine_Name), "Sparrow SP Engine");
         public F Kinglet_K5_Engine_Name => A(nameof(Kinglet_K5_Engine_Name), "Kinglet K5 Engine");
+        public F Hornet_RTD_Engine_Name => A(nameof(Hornet_RTD_Engine_Name), "Hornet RTD Engine");
         public F Hawk_1D_Engine_Name => A(nameof(Hawk_1D_Engine_Name), "Hawk 1D Engine");
         public F Valiant_BV_Engine_Name => A(nameof(Valiant_BV_Engine_Name), "Valiant BV Engine");
         public F Valiant_BW_Engine_Name => A(nameof(Valiant_BW_Engine_Name), "Valiant BW Engine");
@@ -764,13 +773,20 @@ namespace SFS
         public F Aerodynamic_Fuselage_Name => A(nameof(Aerodynamic_Fuselage_Name), "Aerodynamic Fuselage");
         public F Fairing_Name => A(nameof(Fairing_Name), "Fairing");
         // SaturnV
+        [Unexported]
         public F F1_Engine_Name => A(nameof(F1_Engine_Name), "F1 Engine");
+        [Unexported]
         public F J2_Engine_Name => A(nameof(J2_Engine_Name), "J2 Engine");
+        [Unexported]
         public F Service_Engine_Name => A(nameof(Service_Engine_Name), "Service Engine");
+        [Unexported]
         public F Lunar_Module_Descent_Engine_Name => A(nameof(Lunar_Module_Descent_Engine_Name), "Lunar Module Descent Engine");
         // Starship
+        [Unexported]
         public F Raptor_3_Engine_Name => A(nameof(Raptor_3_Engine_Name), "Raptor 3 Engine");
+        [Unexported]
         public F Super_Heavy_33_Raptor_3_Engines_Name => A(nameof(Super_Heavy_33_Raptor_3_Engines_Name), "Super_Heavy_33 Raptor 3 Engines");
+        [Unexported]
         public F Raptor_3_Vacuum_Engine_Name => A(nameof(Raptor_3_Vacuum_Engine_Name), "Raptor 3 Vacuum Engine");
         // Redstone Atlas
         public F A_7_Engine_Name => A(nameof(A_7_Engine_Name), "A-7 Engine");
@@ -805,7 +821,7 @@ namespace SFS
         public F Cerberus_R18_Engine_Description => A(nameof(Cerberus_R18_Engine_Description), "Heavy twin-engine built for super-heavy launch vehicles, exceptional thrust but more mass");
         public F Valiant_BV_Engine_Description => A(nameof(Valiant_BV_Engine_Description), "Efficient and performant vacuum engine, suited for a wide range of deep-space missions");
         public F Valiant_BW_Engine_Description => A(nameof(Valiant_BW_Engine_Description), "Dual-engine vacuum array delivering increased thrust while preserving an excellent efficiency");
-        public F Osprey_RTD_Engine_Description => A(nameof(Osprey_RTD_Engine_Description), "High-performance vacuum engine built for deep-space missions, excellent efficiency");
+        public F Osprey_RD2_Engine_Description => A(nameof(Osprey_RD2_Engine_Description), "High-performance vacuum engine built for deep-space missions, excellent efficiency");
         public F Albatross_B4_Engine_Description => A(nameof(Albatross_B4_Engine_Description), "High-efficiency vacuum engine optimized for long-duration burns beyond atmospheres");
         public F Frontier_P2_Engine_Description => A(nameof(Frontier_P2_Engine_Description), "Powerful engine balancing thrust and efficiency, well suited for medium and heavy-lift vehicles");
         public F Martin_LM_Engine_Description => A(nameof(Martin_LM_Engine_Description), "Compact vacuum engine designed for precision maneuvers, landers, and orbital transfer stages");
@@ -813,6 +829,7 @@ namespace SFS
         public F Sparrow_SX_Engine_Description => A(nameof(Sparrow_SX_Engine_Description), "Ultra-light engine designed for small launchers and attitude stages, low thrust but extremely compact");
         public F Sparrow_SP_Engine_Description => A(nameof(Sparrow_SP_Engine_Description), "Ultra-light side engine designed for small launchers and attitude stages, low thrust but extremely compact");
         public F Kinglet_K5_Engine_Description => A(nameof(Kinglet_K5_Engine_Description), "Compact engine optimized for lightweight first stages and subtle maneuvers");
+        public F Hornet_RTD_Engine_Description => A(nameof(Hornet_RTD_Engine_Description), "Ultra-compact engine optimized for subtle maneuvers");
         public F Ion_Engine_Description => A(nameof(Ion_Engine_Description), "Low thrust engine with an incredibly high efficiency");
         // Boosters
         public F Booster_Description => A(nameof(Booster_Description), "Has high thrust but low efficiency booster\nCannot be turned off or throttle once ignited");
@@ -826,13 +843,20 @@ namespace SFS
         public F Pegasus_A8_Booster_Description => A(nameof(Pegasus_A8_Booster_Description), "Small-sized solid rocket booster, can add an extra push to your upper stage");
         public F Python_S2_Booster_Description => A(nameof(Python_S2_Booster_Description), "Tiny solid rocket booster\nCannot be turned off or throttle once ignited");
         // SaturnV
+        [Unexported]
         public F F1_Engine_Description => A(nameof(F1_Engine_Description), "A high thrust - lower efficiency engine, used in the first stage of Saturn V");
+        [Unexported]
         public F J2_Engine_Description => A(nameof(J2_Engine_Description), "High efficiency, low thrust. Used in space when high thrust isn't a priority");
+        [Unexported]
         public F Service_Engine_Description => A(nameof(Service_Engine_Description), "High efficiency, low thrust. Used in space when high thrust isn't a priority");
+        [Unexported]
         public F Lunar_Module_Descent_Engine_Description => A(nameof(Lunar_Module_Descent_Engine_Description), "A tiny engine used for landers");
         // Starship
+        [Unexported]
         public F Raptor_3_Engine_Description => A(nameof(Raptor_3_Engine_Description), "Full-flow staged combustion, used in the Ship");
+        [Unexported]
         public F Super_Heavy_33_Raptor_3_Engines_Description => A(nameof(Super_Heavy_33_Raptor_3_Engines_Description), "Monstrous thrust - efficient 33 engines, used in the Super Heavy 3");
+        [Unexported]
         public F Raptor_3_Vacuum_Engine_Description => A(nameof(Raptor_3_Vacuum_Engine_Description), "High efficiency, low thrust. Used in space when high thrust isn't a priority");
         // Aerodynamics
         public F Aerodynamic_Nose_Cone_Description => A(nameof(Aerodynamic_Nose_Cone_Description), "An aerodynamic nose cone, used to improve the aerodynamics of side boosters");
